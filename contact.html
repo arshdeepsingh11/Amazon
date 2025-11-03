@@ -3,8 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact</title>
+  <title>Contact • Amazon-Style</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .banner{background:#e6f0ff;border:1px solid #c7dcff;color:#0f3d7a;border-radius:10px;padding:12px 14px;margin-bottom:16px}
+    .kv{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;margin:12px 0}
+    .kv .val{display:flex;align-items:center;gap:8px}
+    .kv .edit{font-size:12px}
+    .select-wrap{margin-top:6px}
+  </style>
 </head>
 <body>
   <!-- HEADER -->
@@ -15,18 +22,69 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="contact.html" aria-current="page">Contact</a>
+      <a class="active" href="contact.html">Contact</a>
     </nav>
   </header>
 
   <!-- CONTENT -->
   <main class="container">
+    <section class="banner">
+      <strong>Fraud Disclaimer:</strong> Amazon doesn't charge to apply. Amazon will take action against related fraud.
+    </section>
+
     <section class="card">
-      <p>Contact page content coming soon.</p>
+      <h2>Contact Us</h2>
+
+      <div class="kv">
+        <div>Language</div>
+        <div class="val">English <a href="#" class="edit journey">Edit</a></div>
+      </div>
+
+      <div class="kv">
+        <div>Country</div>
+        <div class="val">Canada</div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <label for="position">Choose a position to get started</label>
+        <div class="select-wrap">
+          <select id="position" class="input" style="width:100%;max-width:480px;">
+            <option value="">Choose an option</option>
+            <option>Warehouse Associate</option>
+            <option>Delivery Driver</option>
+            <option>Sortation Associate</option>
+            <option>Customer Service</option>
+            <option>Area Manager</option>
+            <option>IT Support</option>
+            <option>Software Development</option>
+          </select>
+        </div>
+      </div>
+
+      <p style="margin-top:18px;">Need help? Select a position to begin your application journey.</p>
     </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">© 2023 Amazon. All rights reserved.</footer>
+
+  <script>
+    // Any “Edit” click should behave like journey and return to Home
+    document.querySelectorAll(".journey").forEach(el=>{
+      el.addEventListener("click", function(e){
+        e.preventDefault();
+        alert("Let’s start your journey");
+        window.location.href = "index.html";
+      });
+    });
+
+    // On position select -> message -> redirect Home
+    document.getElementById("position").addEventListener("change", function(){
+      if(this.value){
+        alert("Position selected: " + this.value + ". Let’s start your journey");
+        window.location.href = "index.html";
+      }
+    });
+  </script>
 </body>
 </html>

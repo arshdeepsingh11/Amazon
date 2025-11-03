@@ -3,8 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About</title>
+  <title>About • Amazon-Style</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body{background:#fff;}
+    .about-wrap{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:16px}
+    .menu-card{
+      background:#ffffff;             /* changed to white */
+      color:#000;                     /* black text */
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:18px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    }
+    .menu-card h4{margin:18px 0 8px;font-size:16px;color:#007185;}
+    .menu-card a{
+      display:block;
+      padding:10px 0;
+      border-bottom:1px solid #e5e7eb;
+      color:#000;
+      text-decoration:none;
+    }
+    .menu-card a:last-child{border-bottom:none}
+    .menu-card a:hover{color:#007185}
+    .menu-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .socials{display:flex;gap:12px}
+    .badge{
+      background:#007185;
+      color:#fff;
+      padding:3px 8px;
+      border-radius:999px;
+      font-size:12px;
+    }
+  </style>
 </head>
 <body>
   <!-- HEADER -->
@@ -14,19 +45,66 @@
     </div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="about.html" aria-current="page">About</a>
+      <a class="active" href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <!-- CONTENT -->
   <main class="container">
-    <section class="card">
-      <p>About page content coming soon.</p>
-    </section>
+    <div class="about-wrap">
+      <section class="menu-card">
+        <div class="menu-top">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <strong>amazon<span style="font-weight:300">jobs</span></strong>
+            <span class="badge">EN</span>
+          </div>
+          <div class="socials" aria-label="Join us now">
+            <a href="#" class="journey" aria-label="Facebook">Facebook</a>
+            <a href="#" class="journey" aria-label="Instagram">Instagram</a>
+            <a href="#" class="journey" aria-label="X">X</a>
+            <a href="#" class="journey" aria-label="LinkedIn">LinkedIn</a>
+          </div>
+        </div>
+
+        <h4>GET STARTED</h4>
+        <a href="#" class="journey">Hiring Process</a>
+
+        <h4>JOB OPPORTUNITIES</h4>
+        <a href="#" class="journey">Warehouse Jobs</a>
+        <a href="#" class="journey">Job Search</a>
+
+        <h4>WHY AMAZON</h4>
+        <a href="#" class="journey">Benefits</a>
+        <a href="#" class="journey">Our Culture</a>
+        <a href="#" class="journey">Shifts and Schedules</a>
+
+        <h4>RESOURCES</h4>
+        <a href="#" class="journey">FAQ</a>
+        <a href="#" class="journey">People with Disabilities</a>
+        <a href="#" class="journey">Contact Us</a>
+      </section>
+
+      <section class="card">
+        <h2>About Us</h2>
+        <p>Explore roles, teams, and growth paths. Click any option above to begin.</p>
+      </section>
+    </div>
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">© 2023 Amazon. All rights reserved.</footer>
+
+  <script>
+    // Intercept menu clicks -> show message -> go Home
+    function goHomeWithMessage(e){
+      e.preventDefault();
+      alert("Let’s start your journey");
+      window.location.href = "index.html";
+    }
+    document.querySelectorAll(".journey").forEach(a=>{
+      a.addEventListener("click", goHomeWithMessage);
+    });
+  </script>
 </body>
 </html>
