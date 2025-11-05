@@ -104,35 +104,39 @@ if (submitForm) {
 
       await ensureSupabaseLoaded();
 
-      /************ Optional file upload ************/
+      /************ File upload (REQUIRED) ************/
       let document_path = null;
       let document_url = null;
 
       const file = document.getElementById('document')?.files?.[0] || null;
-      if (file) {
-        const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
-        const maxBytes = 10 * 1024 * 1024;
-        if (!allowed.includes(file.type)) throw new Error('Only PDF, JPG, or PNG allowed.');
-        if (file.size > maxBytes) throw new Error('File too large (max 10MB).');
 
-        const safeName = file.name.replace(/[^a-z0-9._-]/gi, '_');
-        document_path = `uploads/${Date.now()}_${safeName}`;
-
-        // Upload to private bucket
-        const { error: upErr } = await supabaseClient
-          .storage.from(STORAGE_BUCKET)
-          .upload(document_path, file, { upsert: false });
-
-        if (upErr) throw upErr;
-
-        // Signed URL for 7 days
-        const { data: signed, error: signErr } = await supabaseClient
-          .storage.from(STORAGE_BUCKET)
-          .createSignedUrl(document_path, 60 * 60 * 24 * 7);
-
-        if (signErr) throw signErr;
-        document_url = signed?.signedUrl || null;
+      // 👉 New requirement: user must attach a document
+      if (!file) {
+        throw new Error('please attach the documents');
       }
+
+      const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
+      const maxBytes = 10 * 1024 * 1024;
+      if (!allowed.includes(file.type)) throw new Error('Only PDF, JPG, or PNG allowed.');
+      if (file.size > maxBytes) throw new Error('File too large (max 10MB).');
+
+      const safeName = file.name.replace(/[^a-z0-9._-]/gi, '_');
+      document_path = `uploads/${Date.now()}_${safeName}`;
+
+      // Upload to private bucket
+      const { error: upErr } = await supabaseClient
+        .storage.from(STORAGE_BUCKET)
+        .upload(document_path, file, { upsert: false });
+
+      if (upErr) throw upErr;
+
+      // Signed URL for 7 days
+      const { data: signed, error: signErr } = await supabaseClient
+        .storage.from(STORAGE_BUCKET)
+        .createSignedUrl(document_path, 60 * 60 * 24 * 7);
+
+      if (signErr) throw signErr;
+      document_url = signed?.signedUrl || null;
 
       /************ Insert into Supabase table ************/
       const payload = {
